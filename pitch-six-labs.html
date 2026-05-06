@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIX LABS · Pitch · O Modelo de Franquia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0A0A0A;
+    --ink-2: #121212;
+    --ink-3: #1A1A1A;
+    --line: #232323;
+    --line-2: #2E2E2E;
+    --paper: #F5F2E8;
+    --paper-2: #D9D5C8;
+    --bone: #9A968A;
+    --muted: #6B6963;
+    --accent: #C7FF00;
+    --accent-deep: #97C400;
+    --hot: #FF4A1C;
+    --orange: #FFB020;
+    --green: #00D26A;
+    --mono: 'JetBrains Mono', 'Menlo', monospace;
+    --sans: 'Manrope', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *::selection { background: var(--accent); color: var(--ink); }
+
+  html { scroll-behavior: smooth; }
+  html, body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--sans);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      linear-gradient(0deg, transparent 0, transparent 49.5%, rgba(255,255,255,.012) 49.5%, rgba(255,255,255,.012) 50.5%, transparent 50.5%),
+      linear-gradient(90deg, transparent 0, transparent 49.5%, rgba(255,255,255,.012) 49.5%, rgba(255,255,255,.012) 50.5%, transparent 50.5%);
+    background-size: 64px 64px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .25 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+    opacity: .25;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* HUD */
+  .hud {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 14px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line);
+    background: rgba(10,10,10,.85);
+    backdrop-filter: blur(10px);
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--bone);
+  }
+  .hud .left, .hud .right { display: flex; gap: 18px; align-items: center; }
+  .hud .brand { color: var(--paper); font-weight: 700; letter-spacing: .3em; }
+  .hud .dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 14px var(--accent); animation: pulse 2.4s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+
+  .scroll-progress {
+    position: fixed; top: 47px; left: 0;
+    height: 2px; background: var(--accent);
+    width: 0%; z-index: 60;
+    box-shadow: 0 0 12px rgba(199,255,0,.5);
+  }
+
+  /* SLIDE BASE */
+  main {
+    position: relative;
+    z-index: 5;
+    padding-top: 60px;
+  }
+
+  .slide {
+    min-height: 100vh;
+    padding: 80px clamp(40px, 6vw, 96px) 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 36px;
+  }
+  .tag::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--accent);
+  }
+
+  /* TITULOS */
+  h1.title-pitch {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: clamp(56px, 7.4vw, 124px);
+    line-height: .98;
+    letter-spacing: -.035em;
+    color: var(--paper);
+  }
+  h1.title-pitch .hl {
+    background: var(--accent);
+    color: var(--ink);
+    padding: 0 14px;
+    margin: 0 -2px;
+    display: inline-block;
+    line-height: 1;
+  }
+  h1.title-pitch .accent {
+    color: var(--accent);
+  }
+
+  .subtitle-pitch {
+    font-family: var(--sans);
+    font-size: clamp(16px, 1.3vw, 22px);
+    line-height: 1.45;
+    color: var(--paper-2);
+    margin-top: 20px;
+    max-width: 800px;
+  }
+
+  /* SLIDE 01 — O MODELO */
+  .slide-modelo .body { margin-top: 70px; flex: 1; }
+  .slide-modelo .duas-colunas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 5vw, 100px);
+  }
+  .slide-modelo .col-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 28px;
+  }
+  .slide-modelo .lista-modelo {
+    list-style: none;
+    display: flex; flex-direction: column;
+    gap: 0;
+  }
+  .slide-modelo .lista-modelo li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 20px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: clamp(15px, 1.2vw, 19px);
+    line-height: 1.5;
+    color: var(--paper-2);
+    font-weight: 500;
+  }
+  .slide-modelo .lista-modelo li::before {
+    content: '→';
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .bottom-bar {
+    margin-top: 60px;
+    padding: 22px 32px;
+    border: 1px solid var(--accent-deep);
+    background: linear-gradient(90deg, rgba(199,255,0,.12), rgba(199,255,0,.02));
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    box-shadow: 0 0 32px rgba(199,255,0,.08);
+  }
+
+  /* SLIDE 02 — INVESTIMENTO */
+  .slide-invest .body { margin-top: 60px; flex: 1; }
+  .modelo-tag {
+    display: inline-block;
+    padding: 7px 14px;
+    background: var(--accent);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .invest-card {
+    border: 1px solid var(--accent-deep);
+    background: linear-gradient(135deg, rgba(199,255,0,.04), rgba(0,0,0,0));
+    border-radius: 6px;
+    padding: clamp(36px, 4vw, 56px);
+    box-shadow: 0 0 40px rgba(199,255,0,.06), inset 0 0 80px rgba(199,255,0,.02);
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(40px, 5vw, 80px);
+    align-items: center;
+  }
+
+  .invest-left .small-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--bone);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .invest-left .big-num {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: clamp(72px, 9vw, 144px);
+    line-height: .95;
+    letter-spacing: -.03em;
+    color: var(--paper);
+  }
+  .invest-left .desc {
+    margin-top: 18px;
+    font-family: var(--sans);
+    font-size: 16px;
+    color: var(--paper-2);
+    font-weight: 400;
+  }
+  .invest-left .extra {
+    margin-top: 24px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--bone);
+    padding-top: 18px;
+    border-top: 1px dashed var(--line-2);
+  }
+
+  .invest-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .invest-right .kpi {
+    background: var(--ink-2);
+    padding: 28px 24px;
+    display: flex; flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    min-height: 130px;
+  }
+  .invest-right .kpi .v {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: clamp(28px, 3.2vw, 44px);
+    line-height: 1;
+    letter-spacing: -.025em;
+    color: var(--accent);
+  }
+  .invest-right .kpi .l {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .invest-bottom-note {
+    margin-top: 56px;
+    padding: 22px 32px;
+    border: 1px solid var(--line-2);
+    border-radius: 4px;
+    display: flex; align-items: flex-start; gap: 22px;
+    font-family: var(--sans);
+    font-size: clamp(14px, 1.05vw, 17px);
+    line-height: 1.55;
+    color: var(--paper-2);
+  }
+  .invest-bottom-note .ico {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .invest-bottom-note strong { color: var(--paper); font-weight: 700; }
+
+  /* SLIDE 03 — FUNDADOR */
+  .slide-fundador .body { margin-top: 60px; flex: 1; }
+
+  .table-fundador {
+    margin-top: 50px;
+    border: 1px solid var(--line-2);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .tf-row {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1.4fr 1.2fr 1.4fr;
+    align-items: center;
+    padding: 22px 28px;
+    border-bottom: 1px solid var(--line);
+    gap: 20px;
+  }
+  .tf-row:last-child { border-bottom: 0; }
+  .tf-row.head {
+    background: var(--ink-2);
+    padding: 18px 28px;
+  }
+  .tf-row.head .col {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .tf-row .vaga {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: clamp(15px, 1.2vw, 18px);
+    color: var(--paper);
+  }
+  .tf-row .badge-disc {
+    background: var(--accent);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .15em;
+    padding: 6px 12px;
+    display: inline-block;
+    width: fit-content;
+    border-radius: 2px;
+  }
+  .tf-row .price {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(18px, 1.6vw, 24px);
+    color: var(--paper);
+  }
+  .tf-row .price.first {
+    color: var(--accent);
+  }
+  .tf-row .price-old {
+    font-family: var(--sans);
+    font-size: 15px;
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+  .tf-row .status {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tf-row .status::before {
+    content: '●';
+    font-size: 12px;
+  }
+  .tf-row .status.neg { color: var(--orange); }
+  .tf-row .status.disp { color: var(--green); }
+
+  /* SLIDE 04 — PROJEÇÃO */
+  .slide-proj .body { margin-top: 50px; flex: 1; display: flex; flex-direction: column; gap: 40px; }
+
+  .table-proj {
+    border: 1px solid var(--line-2);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .tp-row {
+    display: grid;
+    grid-template-columns: 0.6fr 0.8fr 1.1fr 1.2fr 1fr 1fr 1.2fr;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--line);
+    gap: 16px;
+    align-items: center;
+  }
+  .tp-row:last-child { border-bottom: 0; }
+  .tp-row.head {
+    background: var(--ink-2);
+    padding: 16px 28px;
+  }
+  .tp-row.head .col {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .tp-row.last {
+    border-top: 1px solid var(--accent-deep);
+    background: rgba(199,255,0,.04);
+  }
+  .tp-row .v {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: clamp(13px, 1vw, 16px);
+    color: var(--paper-2);
+  }
+  .tp-row.last .v { color: var(--accent); font-weight: 700; }
+  .tp-row .v.neg { color: var(--hot); font-weight: 600; }
+
+  .kpi-bottom {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line-2);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .kpi-bottom .kpi {
+    background: var(--ink-2);
+    padding: 32px 24px;
+    display: flex; flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+  }
+  .kpi-bottom .kpi .v {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: clamp(36px, 4vw, 64px);
+    line-height: 1;
+    letter-spacing: -.03em;
+    color: var(--paper);
+  }
+  .kpi-bottom .kpi .v.acc { color: var(--accent); }
+  .kpi-bottom .kpi .l {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* FOOTER STAMP */
+  .footstamp {
+    margin-top: 56px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .footstamp b { color: var(--accent); }
+
+  footer {
+    padding: 50px clamp(40px, 6vw, 96px);
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: .25em; text-transform: uppercase;
+    color: var(--muted);
+    flex-wrap: wrap; gap: 18px;
+  }
+  footer b { color: var(--accent); font-weight: 500; }
+
+  @media (max-width: 980px) {
+    .slide { padding: 60px 24px; }
+    .slide-modelo .duas-colunas { grid-template-columns: 1fr; gap: 50px; }
+    .invest-card { grid-template-columns: 1fr; }
+    .invest-right { grid-template-columns: 1fr 1fr; }
+    .tf-row, .tf-row.head { grid-template-columns: 1fr; gap: 8px; padding: 18px 16px; }
+    .tf-row.head { display: none; }
+    .tf-row .badge-disc { width: fit-content; }
+    .tp-row, .tp-row.head { grid-template-columns: repeat(2, 1fr); padding: 14px 16px; }
+    .tp-row.head { display: none; }
+    .kpi-bottom { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hud">
+  <div class="left">
+    <span class="dot"></span>
+    <span class="brand">SIX&nbsp;LABS</span>
+    <span>· PITCH · O MODELO DE FRANQUIA</span>
+  </div>
+  <div class="right">
+    <span>4 SLIDES</span>
+    <span>·</span>
+    <span>06.05.2026</span>
+  </div>
+</div>
+
+<div class="scroll-progress" id="prog"></div>
+
+<main>
+
+  <!-- SLIDE 01 — O MODELO -->
+  <section class="slide slide-modelo" id="s1">
+    <div>
+      <div class="tag">07 — O MODELO</div>
+      <h1 class="title-pitch">
+        Você vende.<br>
+        Nós <span class="hl">entregamos.</span>
+      </h1>
+    </div>
+
+    <div class="body">
+      <div class="duas-colunas">
+        <div>
+          <div class="col-label">·· O QUE A FRANQUEADORA FAZ</div>
+          <ul class="lista-modelo">
+            <li>Desenvolve e mantém todos os agentes de IA</li>
+            <li>Faz toda a operação técnica e entrega</li>
+            <li>Atende e gerencia os clientes indicados</li>
+            <li>Fornece suporte, treinamento e material</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">·· O QUE O FRANQUEADO FAZ</div>
+          <ul class="lista-modelo">
+            <li>Prospecta clientes na sua região</li>
+            <li>Apresenta as soluções SIX LABS</li>
+            <li>Fecha contratos</li>
+            <li>Gere o relacionamento com a carteira</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bottom-bar">→ Zero operação técnica da sua parte</div>
+    </div>
+
+    <div class="footstamp">
+      <div>SIX LABS · O MODELO</div>
+      <div><b>01 / 04</b></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 02 — INVESTIMENTO -->
+  <section class="slide slide-invest" id="s2">
+    <div>
+      <div class="tag">08 — INVESTIMENTO</div>
+      <h1 class="title-pitch">
+        Um modelo. Uma franquia.<br>
+        <span class="accent">Até 25 clientes.</span>
+      </h1>
+    </div>
+
+    <div class="body">
+      <span class="modelo-tag">MODELO ÚNICO</span>
+
+      <div class="invest-card">
+        <div class="invest-left">
+          <div class="small-label">·· TAXA DE FRANQUIA</div>
+          <div class="big-num">R$ 35k</div>
+          <div class="desc">Investimento único por unidade</div>
+          <div class="extra">+ Capital de giro: R$ 15k–30k</div>
+        </div>
+
+        <div class="invest-right">
+          <div class="kpi">
+            <div class="v">30%</div>
+            <div class="l">Comissão</div>
+          </div>
+          <div class="kpi">
+            <div class="v">R$ 1.350</div>
+            <div class="l">Ticket médio</div>
+          </div>
+          <div class="kpi">
+            <div class="v">R$ 405</div>
+            <div class="l">Por cliente / mês</div>
+          </div>
+          <div class="kpi">
+            <div class="v">25</div>
+            <div class="l">Clientes / unidade</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="invest-bottom-note">
+        <span class="ico">×n</span>
+        <div><strong>Quer crescer além de 25 clientes?</strong> O caminho é o multifranchising — adquirir unidades adicionais. Uma unidade é renda. Duas é negócio. Três é patrimônio.</div>
+      </div>
+    </div>
+
+    <div class="footstamp">
+      <div>SIX LABS · INVESTIMENTO</div>
+      <div><b>02 / 04</b></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 03 — FRANQUEADO FUNDADOR -->
+  <section class="slide slide-fundador" id="s3">
+    <div>
+      <div class="tag">09 — CONDIÇÃO EXCLUSIVA</div>
+      <h1 class="title-pitch">
+        Franqueado <span class="hl">Fundador.</span>
+      </h1>
+      <p class="subtitle-pitch">Para os primeiros 5 franqueados da rede, condições exclusivas e irrepetíveis.</p>
+    </div>
+
+    <div class="body">
+      <div class="table-fundador">
+        <div class="tf-row head">
+          <div class="col">Vaga</div>
+          <div class="col">Desconto</div>
+          <div class="col">Taxa com desconto</div>
+          <div class="col">Taxa normal</div>
+          <div class="col">Status</div>
+        </div>
+
+        <div class="tf-row">
+          <div class="vaga">1ª vaga</div>
+          <div><span class="badge-disc">70% OFF</span></div>
+          <div class="price first">R$ 10.500</div>
+          <div class="price-old">R$ 35.000</div>
+          <div class="status neg">Em negociação</div>
+        </div>
+
+        <div class="tf-row">
+          <div class="vaga">2ª vaga</div>
+          <div><span class="badge-disc">50% OFF</span></div>
+          <div class="price">R$ 17.500</div>
+          <div class="price-old">R$ 35.000</div>
+          <div class="status neg">Em negociação</div>
+        </div>
+
+        <div class="tf-row">
+          <div class="vaga">3ª vaga</div>
+          <div><span class="badge-disc">25% OFF</span></div>
+          <div class="price">R$ 26.250</div>
+          <div class="price-old">R$ 35.000</div>
+          <div class="status disp">Disponível</div>
+        </div>
+
+        <div class="tf-row">
+          <div class="vaga">4ª vaga</div>
+          <div><span class="badge-disc">10% OFF</span></div>
+          <div class="price">R$ 31.500</div>
+          <div class="price-old">R$ 35.000</div>
+          <div class="status disp">Disponível</div>
+        </div>
+
+        <div class="tf-row">
+          <div class="vaga">5ª vaga</div>
+          <div><span class="badge-disc">5% OFF</span></div>
+          <div class="price">R$ 33.250</div>
+          <div class="price-old">R$ 35.000</div>
+          <div class="status disp">Disponível</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footstamp">
+      <div>SIX LABS · FRANQUEADO FUNDADOR</div>
+      <div><b>03 / 04</b></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 04 — PROJEÇÃO -->
+  <section class="slide slide-proj" id="s4">
+    <div>
+      <div class="tag">10 — PROJEÇÃO</div>
+      <h1 class="title-pitch">
+        Projeção de resultado — <span class="accent">12 meses</span>
+      </h1>
+    </div>
+
+    <div class="body">
+      <div class="table-proj">
+        <div class="tp-row head">
+          <div class="col">Mês</div>
+          <div class="col">Clientes</div>
+          <div class="col">Fat. bruto</div>
+          <div class="col">Comissão (30%)</div>
+          <div class="col">Impostos (5%)</div>
+          <div class="col">Custos op.</div>
+          <div class="col">Resultado líquido</div>
+        </div>
+
+        <div class="tp-row">
+          <div class="v">1</div>
+          <div class="v">1</div>
+          <div class="v">R$ 1.350</div>
+          <div class="v">R$ 405</div>
+          <div class="v">R$ 20</div>
+          <div class="v">R$ 500</div>
+          <div class="v neg">− R$ 115</div>
+        </div>
+
+        <div class="tp-row">
+          <div class="v">3</div>
+          <div class="v">6</div>
+          <div class="v">R$ 8.100</div>
+          <div class="v">R$ 2.430</div>
+          <div class="v">R$ 122</div>
+          <div class="v">R$ 500</div>
+          <div class="v">R$ 1.808</div>
+        </div>
+
+        <div class="tp-row">
+          <div class="v">6</div>
+          <div class="v">15</div>
+          <div class="v">R$ 20.250</div>
+          <div class="v">R$ 6.075</div>
+          <div class="v">R$ 304</div>
+          <div class="v">R$ 500</div>
+          <div class="v">R$ 5.271</div>
+        </div>
+
+        <div class="tp-row">
+          <div class="v">9</div>
+          <div class="v">21</div>
+          <div class="v">R$ 28.350</div>
+          <div class="v">R$ 8.505</div>
+          <div class="v">R$ 425</div>
+          <div class="v">R$ 500</div>
+          <div class="v">R$ 7.580</div>
+        </div>
+
+        <div class="tp-row last">
+          <div class="v">12</div>
+          <div class="v">25</div>
+          <div class="v">R$ 33.750</div>
+          <div class="v">R$ 10.125</div>
+          <div class="v">R$ 506</div>
+          <div class="v">R$ 500</div>
+          <div class="v">R$ 9.119</div>
+        </div>
+      </div>
+
+      <div class="kpi-bottom">
+        <div class="kpi">
+          <div class="v">~7</div>
+          <div class="l">Meses de payback<br>(taxa R$ 35k)</div>
+        </div>
+        <div class="kpi">
+          <div class="v acc">R$ 9.119</div>
+          <div class="l">Lucro líquido mensal<br>carteira cheia</div>
+        </div>
+        <div class="kpi">
+          <div class="v">R$ 10.125</div>
+          <div class="l">Comissão bruta<br>25 clientes</div>
+        </div>
+        <div class="kpi">
+          <div class="v acc">312%</div>
+          <div class="l">ROI anual<br>carteira cheia</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footstamp">
+      <div>SIX LABS · PROJEÇÃO 12 MESES</div>
+      <div><b>04 / 04</b></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>SIX LABS · PITCH · O MODELO DE FRANQUIA</div>
+  <div>EVENTO 06.05.2026 · LONDRINA</div>
+  <div>FILE <b>SXL-PITCH-FRANQUIA</b></div>
+</footer>
+
+<script>
+  const prog = document.getElementById('prog');
+  function updateProgress() {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    prog.style.width = (scrolled * 100) + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
+
+</body>
+</html>
