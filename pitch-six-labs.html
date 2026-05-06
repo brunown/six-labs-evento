@@ -503,7 +503,131 @@
   }
   footer b { color: var(--accent); font-weight: 500; }
 
+  /* SLIDE VANTAGENS (cards grid) */
+  .slide-vant .body { margin-top: 60px; flex: 1; }
+  .vant-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .vant-card {
+    background: var(--ink-2);
+    padding: 28px 26px;
+    display: flex; flex-direction: column;
+    gap: 14px;
+    min-height: 260px;
+    position: relative;
+    border-left: 2px solid transparent;
+    transition: border-color .25s;
+  }
+  .vant-card:hover { border-left-color: var(--accent); background: var(--ink-3); }
+  .vant-card .idx {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .25em;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .vant-card .title-v {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: clamp(20px, 1.6vw, 26px);
+    line-height: 1.15;
+    letter-spacing: -.02em;
+    color: var(--paper);
+  }
+  .vant-card .desc-v {
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--paper-2);
+    font-weight: 400;
+  }
+  .vant-card .resolve {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line-2);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .vant-card .resolve b { color: var(--accent); font-weight: 600; }
+
+  /* SLIDE DESVANTAGENS / PRA QUEM NÃO É */
+  .slide-desv .body { margin-top: 60px; flex: 1; }
+  .desv-list {
+    display: flex; flex-direction: column;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .desv-row {
+    background: var(--ink-2);
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 28px;
+    align-items: center;
+    border-left: 2px solid transparent;
+    transition: border-color .25s, background .25s;
+  }
+  .desv-row:hover { border-left-color: var(--hot); background: var(--ink-3); }
+  .desv-row .idx {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .2em;
+    color: var(--hot);
+    font-weight: 700;
+  }
+  .desv-row .body-d {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .desv-row .title-d {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(18px, 1.5vw, 24px);
+    line-height: 1.2;
+    letter-spacing: -.015em;
+    color: var(--paper);
+  }
+  .desv-row .desc-d {
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--paper-2);
+    font-weight: 400;
+  }
+  .desv-row .desc-d strong { color: var(--paper); font-weight: 700; }
+  .desv-row .arrow-out {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--bone);
+    font-weight: 500;
+    text-align: right;
+    line-height: 1.4;
+  }
+  .desv-row .arrow-out b {
+    display: block;
+    color: var(--paper);
+    margin-top: 4px;
+    letter-spacing: .1em;
+  }
+
   @media (max-width: 980px) {
+    .vant-grid { grid-template-columns: 1fr; }
+    .desv-row { grid-template-columns: 1fr; gap: 14px; }
+    .desv-row .arrow-out { text-align: left; }
     .slide { padding: 60px 24px; }
     .slide-modelo .duas-colunas { grid-template-columns: 1fr; gap: 50px; }
     .invest-card { grid-template-columns: 1fr; }
@@ -526,7 +650,7 @@
     <span>· PITCH · O MODELO DE FRANQUIA</span>
   </div>
   <div class="right">
-    <span>4 SLIDES</span>
+    <span>6 SLIDES</span>
     <span>·</span>
     <span>06.05.2026</span>
   </div>
@@ -536,8 +660,127 @@
 
 <main>
 
-  <!-- SLIDE 01 — O MODELO -->
-  <section class="slide slide-modelo" id="s1">
+  <!-- SLIDE 01 — VANTAGENS -->
+  <section class="slide slide-vant" id="s1">
+    <div>
+      <div class="tag">05 — VANTAGENS</div>
+      <h1 class="title-pitch">
+        6 razões.<br>
+        Pra quem <span class="hl">sabe vender.</span>
+      </h1>
+      <p class="subtitle-pitch">Cada vantagem responde uma dor concreta dos outros 4 caminhos. Esse é o modelo que junta o que cada um deles deixa de fora.</p>
+    </div>
+
+    <div class="body">
+      <div class="vant-grid">
+        <div class="vant-card">
+          <div class="idx">P.01</div>
+          <div class="title-v">Produto pronto, zero técnico.</div>
+          <div class="desc-v">Você não programa, não integra, não contrata dev. A SIX entrega solução pronta — você só vende.</div>
+          <div class="resolve">Resolve a dor de: <b>Agência · SaaS</b></div>
+        </div>
+
+        <div class="vant-card">
+          <div class="idx">P.02</div>
+          <div class="title-v">Recorrência mensal real.</div>
+          <div class="desc-v">Cliente paga assinatura todo mês. Carteira acumula. Acabou o "começa do zero" todo mês.</div>
+          <div class="resolve">Resolve a dor de: <b>Consultoria · Educação</b></div>
+        </div>
+
+        <div class="vant-card">
+          <div class="idx">P.03</div>
+          <div class="title-v">Você não é o produto.</div>
+          <div class="desc-v">A marca é a SIX LABS. Pode adoecer, viajar, escalar — o negócio não para com você.</div>
+          <div class="resolve">Resolve a dor de: <b>Consultoria · Educação</b></div>
+        </div>
+
+        <div class="vant-card">
+          <div class="idx">P.04</div>
+          <div class="title-v">Aproveita a carteira que você já tem.</div>
+          <div class="desc-v">Os mesmos clientes que você atende ou conhece entram primeiro. Não precisa prospectar do zero.</div>
+          <div class="resolve">Resolve a dor de: <b>Todas as personas</b></div>
+        </div>
+
+        <div class="vant-card">
+          <div class="idx">P.05</div>
+          <div class="title-v">Inteligência acumulada via rede.</div>
+          <div class="desc-v">O que funciona em Goiânia chega pra você em Londrina. Método, abordagem, objeção, fechamento — a rede aprende em conjunto.</div>
+          <div class="resolve">Resolve a dor de: <b>Agência</b></div>
+        </div>
+
+        <div class="vant-card">
+          <div class="idx">P.06</div>
+          <div class="title-v">Capital de entrada baixo.</div>
+          <div class="desc-v">Você não precisa montar empresa, alugar escritório, contratar time, pagar dev. Fração do que custa abrir agência ou SaaS.</div>
+          <div class="resolve">Resolve a dor de: <b>Agência · SaaS · Fábio</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footstamp">
+      <div>SIX LABS · VANTAGENS</div>
+      <div><b>01 / 06</b></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 02 — PRA QUEM NÃO É -->
+  <section class="slide slide-desv" id="s2">
+    <div>
+      <div class="tag">06 — PRA QUEM NÃO É</div>
+      <h1 class="title-pitch">
+        Esse modelo <span class="hl" style="background: var(--hot); color: var(--paper);">não é</span> pra todo mundo.
+      </h1>
+      <p class="subtitle-pitch">Honestidade comercial: se você se encaixa em algum desses 4 perfis, esse caminho não é o seu. Vai pra outro modelo — que serve melhor.</p>
+    </div>
+
+    <div class="body">
+      <div class="desv-list">
+        <div class="desv-row">
+          <div class="idx">C.01</div>
+          <div class="body-d">
+            <div class="title-d">Pra quem quer ser técnico em IA.</div>
+            <div class="desc-d">Se você quer programar, construir agente, dominar a tecnologia por dentro — esse não é seu caminho.</div>
+          </div>
+          <div class="arrow-out">Vai de<b>AGÊNCIA · SAAS</b></div>
+        </div>
+
+        <div class="desv-row">
+          <div class="idx">C.02</div>
+          <div class="body-d">
+            <div class="title-d">Pra quem tem capital sobrando e quer construir empresa de tecnologia.</div>
+            <div class="desc-d">Se você tem caixa pra montar time técnico, queimar capital por 2–3 anos e construir uma empresa de tecnologia do zero — esse modelo é pequeno demais pra você.</div>
+          </div>
+          <div class="arrow-out">Vai de<b>SAAS</b></div>
+        </div>
+
+        <div class="desv-row">
+          <div class="idx">C.03</div>
+          <div class="body-d">
+            <div class="title-d">Pra quem quer construir marca pessoal forte.</div>
+            <div class="desc-d">Se seu objetivo é ser referência pública, ter palco, virar autoridade reconhecida em IA — você precisa ser o rosto da operação.</div>
+          </div>
+          <div class="arrow-out">Vai de<b>CONSULTORIA · EDUCAÇÃO</b></div>
+        </div>
+
+        <div class="desv-row">
+          <div class="idx">C.04</div>
+          <div class="body-d">
+            <div class="title-d">Pra quem busca renda passiva.</div>
+            <div class="desc-d">Se você quer comprar uma franquia e contratar alguém pra tocar — não é aqui. Esse modelo exige que <strong>você</strong> opere comercialmente.</div>
+          </div>
+          <div class="arrow-out">Não é<b>FRANQUIA</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footstamp">
+      <div>SIX LABS · PRA QUEM NÃO É</div>
+      <div><b>02 / 06</b></div>
+    </div>
+  </section>
+
+  <!-- SLIDE 03 — O MODELO -->
+  <section class="slide slide-modelo" id="s3">
     <div>
       <div class="tag">07 — O MODELO</div>
       <h1 class="title-pitch">
@@ -573,12 +816,12 @@
 
     <div class="footstamp">
       <div>SIX LABS · O MODELO</div>
-      <div><b>01 / 04</b></div>
+      <div><b>03 / 06</b></div>
     </div>
   </section>
 
-  <!-- SLIDE 02 — INVESTIMENTO -->
-  <section class="slide slide-invest" id="s2">
+  <!-- SLIDE 04 — INVESTIMENTO -->
+  <section class="slide slide-invest" id="s4">
     <div>
       <div class="tag">08 — INVESTIMENTO</div>
       <h1 class="title-pitch">
@@ -626,12 +869,12 @@
 
     <div class="footstamp">
       <div>SIX LABS · INVESTIMENTO</div>
-      <div><b>02 / 04</b></div>
+      <div><b>04 / 06</b></div>
     </div>
   </section>
 
-  <!-- SLIDE 03 — FRANQUEADO FUNDADOR -->
-  <section class="slide slide-fundador" id="s3">
+  <!-- SLIDE 05 — FRANQUEADO FUNDADOR -->
+  <section class="slide slide-fundador" id="s5">
     <div>
       <div class="tag">09 — CONDIÇÃO EXCLUSIVA</div>
       <h1 class="title-pitch">
@@ -694,12 +937,12 @@
 
     <div class="footstamp">
       <div>SIX LABS · FRANQUEADO FUNDADOR</div>
-      <div><b>03 / 04</b></div>
+      <div><b>05 / 06</b></div>
     </div>
   </section>
 
-  <!-- SLIDE 04 — PROJEÇÃO -->
-  <section class="slide slide-proj" id="s4">
+  <!-- SLIDE 06 — PROJEÇÃO -->
+  <section class="slide slide-proj" id="s6">
     <div>
       <div class="tag">10 — PROJEÇÃO</div>
       <h1 class="title-pitch">
@@ -792,7 +1035,7 @@
 
     <div class="footstamp">
       <div>SIX LABS · PROJEÇÃO 12 MESES</div>
-      <div><b>04 / 04</b></div>
+      <div><b>06 / 06</b></div>
     </div>
   </section>
 
